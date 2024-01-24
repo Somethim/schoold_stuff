@@ -1,0 +1,114 @@
+Index: main.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n\nusing namespace std;\n\n//# Used:\n//# 1. vector\n//# 2. struct\n//# 4. remove_if\n//# 5. erase\n//# 6. auto\n//# 7. range based for loop\n//# 8. pointer\n\n\n//#TODO:\n//     1. Add Contact (input only name and phone number, id should be auto generated)\n//     2. Search Contact (search by id, name or phone number. Print all details of contact)\n//     3. Delete Contact (search by id, name or phone number. Delete contact using id)\n//     4. List Contacts (print all contacts)\n//     5. Exit()\n\nstruct Contact {\n    int id;\n    string name;\n    string phoneNumber;\n};\n\nvector<Contact> contacts;\n\nvoid addContact(const Contact &contact) {\n    contacts.push_back(contact);\n}\n\nContact *searchContact(const string &name) {\n    for (auto &contact: contacts) {\n        if (contact.name == name) {\n            return &contact;\n        }\n    }\n    return nullptr;\n}\n\nvoid deleteContact(const string &name) {\n    contacts.erase(remove_if(contacts.begin(), contacts.end(),\n                             [&](const Contact &contact) { return contact.name == name; }),\n                   contacts.end());\n}\n\nvoid listContacts() {\n    for (const auto &contact: contacts) {\n        cout << \"Name: \" << contact.name << \", Phone Number: \" << contact.phoneNumber << \"\\n\";\n    }\n}\n\nint main() {\n    int choice;\n\n    do {\n        cout << \"1. Add Contact\\n2. Search Contact\\n3. Delete Contact\\n4. List Contacts\\n5. Exit\\n\";\n        cin >> choice;\n\n        switch (choice) {\n            case 1: {\n                Contact newContact;\n                cout << \"Enter name: \";\n                cin >> newContact.name;\n                cout << \"Enter phone number: \";\n                cin >> newContact.phoneNumber;\n                addContact(newContact);\n                break;\n            }\n            case 2: {\n                string searchName;\n                cout << \"Enter name: \";\n                cin >> searchName;\n                Contact *foundContact = searchContact(searchName);\n                if (foundContact) {\n                    cout << \"Name: \" << foundContact->name << \", Phone Number: \" << foundContact->phoneNumber << \"\\n\";\n                } else {\n                    cout << \"Contact not found\\n\";\n                }\n                break;\n            }\n            case 3: {\n                string deleteName;\n                cout << \"Enter name: \";\n                cin >> deleteName;\n                deleteContact(deleteName);\n                break;\n            }\n            case 4:\n                listContacts();\n                break;\n            case 5:\n                break;\n            default:\n                cout << \"Invalid choice\\n\";\n                break;\n        }\n    } while (choice != 5);\n\n    return 0;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.cpp b/main.cpp
+--- a/main.cpp	(revision 30fd681b4de0db932f3769e261ddfe590fba2c74)
++++ b/main.cpp	(date 1706099925559)
+@@ -5,102 +5,7 @@
+ 
+ using namespace std;
+ 
+-//# Used:
+-//# 1. vector
+-//# 2. struct
+-//# 4. remove_if
+-//# 5. erase
+-//# 6. auto
+-//# 7. range based for loop
+-//# 8. pointer
+-
+-
+-//#TODO:
+-//     1. Add Contact (input only name and phone number, id should be auto generated)
+-//     2. Search Contact (search by id, name or phone number. Print all details of contact)
+-//     3. Delete Contact (search by id, name or phone number. Delete contact using id)
+-//     4. List Contacts (print all contacts)
+-//     5. Exit()
+-
+-struct Contact {
+-    int id;
+-    string name;
+-    string phoneNumber;
+-};
+-
+-vector<Contact> contacts;
+-
+-void addContact(const Contact &contact) {
+-    contacts.push_back(contact);
+-}
+-
+-Contact *searchContact(const string &name) {
+-    for (auto &contact: contacts) {
+-        if (contact.name == name) {
+-            return &contact;
+-        }
+-    }
+-    return nullptr;
+-}
+-
+-void deleteContact(const string &name) {
+-    contacts.erase(remove_if(contacts.begin(), contacts.end(),
+-                             [&](const Contact &contact) { return contact.name == name; }),
+-                   contacts.end());
+-}
+-
+-void listContacts() {
+-    for (const auto &contact: contacts) {
+-        cout << "Name: " << contact.name << ", Phone Number: " << contact.phoneNumber << "\n";
+-    }
+-}
+-
+ int main() {
+-    int choice;
+-
+-    do {
+-        cout << "1. Add Contact\n2. Search Contact\n3. Delete Contact\n4. List Contacts\n5. Exit\n";
+-        cin >> choice;
+-
+-        switch (choice) {
+-            case 1: {
+-                Contact newContact;
+-                cout << "Enter name: ";
+-                cin >> newContact.name;
+-                cout << "Enter phone number: ";
+-                cin >> newContact.phoneNumber;
+-                addContact(newContact);
+-                break;
+-            }
+-            case 2: {
+-                string searchName;
+-                cout << "Enter name: ";
+-                cin >> searchName;
+-                Contact *foundContact = searchContact(searchName);
+-                if (foundContact) {
+-                    cout << "Name: " << foundContact->name << ", Phone Number: " << foundContact->phoneNumber << "\n";
+-                } else {
+-                    cout << "Contact not found\n";
+-                }
+-                break;
+-            }
+-            case 3: {
+-                string deleteName;
+-                cout << "Enter name: ";
+-                cin >> deleteName;
+-                deleteContact(deleteName);
+-                break;
+-            }
+-            case 4:
+-                listContacts();
+-                break;
+-            case 5:
+-                break;
+-            default:
+-                cout << "Invalid choice\n";
+-                break;
+-        }
+-    } while (choice != 5);
+ 
+     return 0;
+ }
+\ No newline at end of file
