@@ -5,33 +5,37 @@
 
 using namespace std;
 
-
-int binary_search(const int arr[], int x, int low, int high) {
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-
-        if (arr[mid] == x) {
-            return mid;
-        } else if (arr[mid] < x) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
+void bubble_sort(int arr[], int size) {
+    for (int step = 0; step < size; step++) {
+        for (int i = 0; i < size - step; i++) {
+            if (arr[i] > arr[i + 1]) {
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
         }
     }
+}
 
-    return -1;
+
+void print_array(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        cout << arr[i] << "\t";
+    }
+    cout << "\n";
 }
 
 int main() {
-    int arr[] = {3, 4, 5, 6, 7, 8, 9};
-    int x = 4;
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int result = binary_search(arr, x, 0, n - 1);
-    if (result == -1) {
-        cout << "Element not found";
-    } else {
-        cout << "Element found at index " << result;
-    }
+    int arr[] = {5, 4, 3, 2, 1};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Before sorting: \n";
+    print_array(arr, size);
+
+    bubble_sort(arr, size);
+
+    cout << "After sorting: \n";
+    print_array(arr, size);
 
 
     return 0;
