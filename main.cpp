@@ -1,41 +1,16 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
 
 using namespace std;
 
-void bubble_sort(int arr[], int size) {
-    for (int step = 0; step < size - 1; step++) {
-        for (int i = 0; i < size - step - 1; i++) {
-            if (arr[i] > arr[i + 1]) {
-                int temp = arr[i];
-                arr[i] = arr[i + 1];
-                arr[i + 1] = temp;
-            }
-        }
-    }
-}
-
-void print_array(int arr[], int size) {
-    for (int i = 0; i < size; i++) {
-        cout << arr[i] << "\t";
-    }
-    cout << "\n";
-}
-
 int main() {
-    int arr[] = {-2, 45, 0, 11, -9};
-    int size = sizeof(arr) / sizeof(arr[0]);
+    int x = 0;
 
-    cout << "Before sorting: \n";
-    print_array(arr, size);
-
-    bubble_sort(arr, size);
-
-    cout << "After sorting: \n";
-    print_array(arr, size);
-
+    while (x <= 10) {
+        if (x % 2 != 0) {
+            cout << x << endl;
+        }
+        x++;
+    }
 
     return 0;
 }
