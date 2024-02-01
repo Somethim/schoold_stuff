@@ -5,25 +5,7 @@
 
 using namespace std;
 
-//# Used:
-//# 1. vector
-//# 2. struct
-//# 4. remove_if
-//# 5. erase
-//# 6. auto
-//# 7. range based for loop
-//# 8. pointer
-
-
-//#TODO:
-//     1. Add Contact (input only name and phone number, id should be auto generated)
-//     2. Search Contact (search by id, name or phone number. Print all details of contact)
-//     3. Delete Contact (search by id, name or phone number. Delete contact using id)
-//     4. List Contacts (print all contacts)
-//     5. Exit()
-
 struct Contact {
-    int id;
     string name;
     string phoneNumber;
 };
@@ -44,9 +26,14 @@ Contact *searchContact(const string &name) {
 }
 
 void deleteContact(const string &name) {
-    contacts.erase(remove_if(contacts.begin(), contacts.end(),
-                             [&](const Contact &contact) { return contact.name == name; }),
-                   contacts.end());
+    auto newEnd = remove_if(contacts.begin(), contacts.end(),
+                            [&](const Contact &contact) { return contact.name == name; });
+    if (newEnd != contacts.end()) {
+        contacts.erase(newEnd, contacts.end());
+        cout << "Contact deleted\n";
+    } else {
+        cout << "Contact not found\n";
+    }
 }
 
 void listContacts() {
@@ -62,20 +49,28 @@ int main() {
         cout << "1. Add Contact\n2. Search Contact\n3. Delete Contact\n4. List Contacts\n5. Exit\n";
         cin >> choice;
 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (cin.fail()) {
+            cin.clear();
+            cout << "Invalid choice\n";
+            continue;
+        }
+
         switch (choice) {
             case 1: {
                 Contact newContact;
                 cout << "Enter name: ";
-                cin >> newContact.name;
+                getline(cin, newContact.name);
                 cout << "Enter phone number: ";
-                cin >> newContact.phoneNumber;
+                getline(cin, newContact.phoneNumber);
                 addContact(newContact);
                 break;
             }
             case 2: {
                 string searchName;
                 cout << "Enter name: ";
-                cin >> searchName;
+                getline(cin, searchName);
                 Contact *foundContact = searchContact(searchName);
                 if (foundContact) {
                     cout << "Name: " << foundContact->name << ", Phone Number: " << foundContact->phoneNumber << "\n";
@@ -87,7 +82,7 @@ int main() {
             case 3: {
                 string deleteName;
                 cout << "Enter name: ";
-                cin >> deleteName;
+                getline(cin, deleteName);
                 deleteContact(deleteName);
                 break;
             }
